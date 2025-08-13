@@ -1,0 +1,14 @@
+{
+    "name": "root/strykers",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcus Gabriel"
+        }
+    ],
+    "require": {}
+}
