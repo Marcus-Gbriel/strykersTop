@@ -2,12 +2,13 @@
 
 namespace Core\Middleware;
 
+use Core\Logger;
+
 class Pages
 {
     public function __construct()
     {
-        // Inicialização da página
-        echo "Página inicializada! <br>";
+        Logger::Log("Página inicializada!");
     }
 
     public function handle()

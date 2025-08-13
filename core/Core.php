@@ -24,6 +24,7 @@ class Core
     public static function error(string $message = ""): void
     {
         echo "error: $message";
+        Requests::SetStatusCode(500);
         exit;
     }
 

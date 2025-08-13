@@ -16,7 +16,8 @@ class Router
 
     public function __construct()
     {
-        self::$DefaultRoutes = DefaultRoutes::getRoutes();
+        require_once DOCUMENT_ROOT . '/core/Routes/DefaultRoutes.php';
+        self::$DefaultRoutes = \Core\Routes\DefaultRoutes::getRoutes();
     }
 
     /**
@@ -33,8 +34,8 @@ class Router
         $routes = self::$DefaultRoutes;
         if (isset($routes[$method][$uri])) {
             $route = $routes[$method][$uri];
-            $this->ExecuteController($route['controller']);
             $this->ExecuteMiddleware($route['middleware']);
+            $this->ExecuteController($route['controller']);
         } else {
             Core::error("Rota não encontrada: " . $uri);
         }
@@ -84,6 +85,10 @@ class Router
      */
     private function ExecuteMiddleware(string $middleware): void
     {
+        if ($middleware == '') {
+            return;
+        }
+
         $file = DOCUMENT_ROOT . '/core/Middleware/' . $middleware . '.php';
 
         if (!file_exists($file)) {

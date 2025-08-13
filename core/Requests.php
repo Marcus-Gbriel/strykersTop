@@ -82,4 +82,17 @@ class Requests
     {
         return $_SERVER['REQUEST_METHOD'] ?? 'GET';
     }
+
+    /**
+     * 
+     * Define o código de status da resposta HTTP
+     *
+     * @param int $code Código de status
+     * @return void
+     * 
+     */
+    public static function SetStatusCode(int $code = 200): void
+    {
+        http_response_code($code);
+    }
 }

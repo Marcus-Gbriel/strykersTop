@@ -1,6 +1,7 @@
 <?php
 
-namespace Core;
+namespace Core\Routes;
+
 /**
  * 
  * Classe para definir as rotas padrão da aplicação
@@ -28,6 +29,10 @@ class DefaultRoutes
             'login' => [
                 'controller' => 'LoginController@index',
                 'middleware' => 'Auth'
+            ],
+            'public' => [
+                'controller' => 'PublicController@index',
+                'middleware' => ''
             ]
         ],
         'POST' => [

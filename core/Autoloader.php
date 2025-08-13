@@ -18,8 +18,7 @@ class Autoloader
         'Requests.php',
         'Router.php',
         'Configure.php',
-        'Logger.php',
-        'DefaultRoutes.php'
+        'Logger.php'
     ];
 
     public function __construct()
