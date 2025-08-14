@@ -9,7 +9,7 @@ class Pages
     public function __construct()
     {
         #Logger::Log("Página inicializada!");
-        require_once DOCUMENT_ROOT . '/src/components/index.html';
+        #require_once DOCUMENT_ROOT . '/src/components/index.html';
     }
 
     public function handle()
