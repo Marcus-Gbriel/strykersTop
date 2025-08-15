@@ -2,139 +2,153 @@
 
 namespace Core;
 
+/**
+ * 
+ * Classe para renderização de views/templates
+ * 
+ * @author Marcus Gabriel Xavier Geraldino <marcusgx45@gmail.com>
+ * @version 0.0.1
+ * 
+ */
 class View
 {
     private static array $data = [];
     private static string $layout = 'main';
-
+    
     /**
-     * 
-     * Renderiza uma view com os dados fornecidos.
+     * Renderiza uma view com layout
      *
-     * @param string $view Visualização
-     * @param array $data Dados a serem passados para a view
-     * @param string $layout Layout a ser utilizado
+     * @param string $view Nome da view
+     * @param array $data Dados para passar para a view
+     * @param string $layout Layout a ser usado (opcional)
      * @return void
-     * 
      */
-    public static function render(string $view, array $data = [], string $layout = ''): void
+    public static function render(string $view, array $data = [], string $layout = null): void
     {
         self::$data = $data;
-
-        if ($layout !== '') {
+        
+        if ($layout !== null) {
             self::$layout = $layout;
         }
-
-        $viewPath = "";
+        
+        $viewPath = self::getViewPath($view);
+        $layoutPath = self::getLayoutPath(self::$layout);
+        
+        if (!file_exists($viewPath)) {
+            Core::error("View não encontrada: " . $view);
+        }
+        
+        // Captura o conteúdo da view
+        ob_start();
+        extract(self::$data);
+        include $viewPath;
+        $content = ob_get_clean();
+        
+        // Se não há layout, apenas retorna o conteúdo da view
+        if (!file_exists($layoutPath)) {
+            echo $content;
+            return;
+        }
+        
+        // Renderiza com layout
+        extract(self::$data);
+        include $layoutPath;
     }
-
+    
     /**
-     * 
-     * Renderiza uma view com os dados fornecidos.
+     * Renderiza apenas uma view sem layout
      *
-     * @param string $view Visualização
-     * @param array $data Dados a serem passados para a view
+     * @param string $view Nome da view
+     * @param array $data Dados para passar para a view
      * @return void
-     * 
      */
     public static function renderOnly(string $view, array $data = []): void
     {
         self::$data = $data;
         $viewPath = self::getViewPath($view);
-
+        
         if (!file_exists($viewPath)) {
             Core::error("View não encontrada: " . $view);
         }
-
+        
         extract(self::$data);
         include $viewPath;
     }
-
+    
     /**
-     * 
-     * Renderiza uma partial com os dados fornecidos.
+     * Inclui uma partial (componente reutilizável)
      *
-     * @param string $partial Partial a ser renderizada
-     * @param array $data Dados a serem passados para a partial
+     * @param string $partial Nome da partial
+     * @param array $data Dados específicos da partial
      * @return void
-     * 
      */
     public static function partial(string $partial, array $data = []): void
     {
         $partialPath = DOCUMENT_ROOT . '/src/views/partials/' . $partial . '.php';
-
+        
         if (!file_exists($partialPath)) {
             Core::error("Partial não encontrada: " . $partial);
         }
-
+        
         // Mescla dados globais com dados específicos da partial
         $mergedData = array_merge(self::$data, $data);
         extract($mergedData);
         include $partialPath;
     }
-
+    
     /**
-     * 
-     * Compartilha dados entre views.
+     * Define dados globais para todas as views
      *
-     * @param array $data Dados a serem compartilhados
+     * @param array $data
      * @return void
-     * 
      */
     public static function share(array $data): void
     {
         self::$data = array_merge(self::$data, $data);
     }
-
+    
     /**
-     * 
-     * Obtém o caminho da view.
+     * Retorna o caminho completo da view
      *
-     * @param string $view Visualização
+     * @param string $view
      * @return string
-     * 
      */
-    public static function getViewPath(string $view): string
+    private static function getViewPath(string $view): string
     {
         return DOCUMENT_ROOT . '/src/views/' . $view . '.php';
     }
-
+    
     /**
-     * 
-     * Obtém o caminho do layout.
+     * Retorna o caminho completo do layout
      *
-     * @param string $layout Layout a ser utilizado
+     * @param string $layout
      * @return string
-     * 
      */
-    public static function getLayoutPath(string $layout): string
+    private static function getLayoutPath(string $layout): string
     {
         return DOCUMENT_ROOT . '/src/views/layouts/' . $layout . '.php';
     }
-
+    
     /**
-     * 
-     * Escapa uma string para uso seguro em HTML.
+     * Escapa HTML para prevenir XSS
      *
-     * @param string $string String a ser escapada
+     * @param mixed $value
      * @return string
-     * 
      */
-    public static function escape(string $string): string
+    public static function escape($value): string
     {
-        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
-
+    
     /**
-     * 
-     * Gera uma URL absoluta.
+     * Gera URL baseada na configuração
      *
-     * @param string $path Caminho a ser utilizado na URL
+     * @param string $path
      * @return string
-     * 
      */
     public static function url(string $path = ''): string
     {
-        return rtrim('/', '/') . '/' . ltrim($path, '/');
+        $baseUrl = CONFIG['base_url'] ?? '/';
+        return rtrim($baseUrl, '/') . '/' . ltrim($path, '/');
     }
 }
