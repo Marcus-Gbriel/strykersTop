@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-6 text-md-end">
                 <p class="mb-0">&copy; <?php echo date('Y'); ?> StrykersNet. Todos os direitos reservados.</p>
-                <small class="text-muted">Versão <?php echo CONFIG['version'] ?? '1.0.0'; ?></small>
+                <small class="mb-0">Versão <?php echo CONFIG['version'] ?? '1.0.0'; ?></small>
             </div>
         </div>
     </div>

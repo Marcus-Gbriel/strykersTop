@@ -16,20 +16,20 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link <?php echo ($currentPage === 'home') ? 'active' : ''; ?>" 
-                                   href="<?php echo \Core\View::url('home'); ?>">Home</a>
+                                <a class="nav-link <?php echo ($currentPage === 'home') ? 'active' : ''; ?>"
+                                    href="<?php echo \Core\View::url('home'); ?>">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link <?php echo ($currentPage === 'about') ? 'active' : ''; ?>" 
-                                   href="<?php echo \Core\View::url('about'); ?>">Sobre</a>
+                                <a class="nav-link <?php echo ($currentPage === 'about') ? 'active' : ''; ?>"
+                                    href="<?php echo \Core\View::url('about'); ?>">Sobre</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link <?php echo ($currentPage === 'contact') ? 'active' : ''; ?>" 
-                                   href="<?php echo \Core\View::url('contact'); ?>">Contato</a>
+                                <a class="nav-link <?php echo ($currentPage === 'contact') ? 'active' : ''; ?>"
+                                    href="<?php echo \Core\View::url('contact'); ?>">Contato</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link <?php echo ($currentPage === 'login') ? 'active' : ''; ?>" 
-                                   href="<?php echo \Core\View::url('login'); ?>">Login</a>
+                                <a class="nav-link <?php echo ($currentPage === 'login') ? 'active' : ''; ?>"
+                                    href="<?php echo \Core\View::url('login'); ?>">Login</a>
                             </li>
                         </ul>
                     </div>
